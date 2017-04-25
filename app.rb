@@ -4,11 +4,14 @@ require('sinatra')
 require('sinatra/reloader')
 also_reload('lib/**/*.rb')
 
-# get('/') do
-#   erb(:form)
-# end
-#
-# get('/title') do#place form 'action' in the get parentheses
-#  @title = params.fetch('input1').title_case() #from the name attribute in the input tag on the form
-#  erb(:title)#this is the page where you want your method to display
-# end
+get('/') do
+  @tasks = Task.all()
+  erb(:index)
+end
+
+post('/tasks') do
+  description = params.fetch("description")
+  task = Task.new(description)
+  task.save()
+  erb(:tasks)
+end
